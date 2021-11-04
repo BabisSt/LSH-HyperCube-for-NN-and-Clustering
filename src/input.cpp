@@ -43,6 +43,7 @@ char *Input::getCmdOption(char **begin, char **end, const string &option)
     if(itr != end && ++itr != end)
     {
         return *itr;
+        cout << itr << endl;
     }
 
     return nullptr;

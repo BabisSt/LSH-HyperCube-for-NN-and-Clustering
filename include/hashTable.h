@@ -1,3 +1,7 @@
+/*
+Auto to arxeio einai gia thn dhmiourgia twn hashtable pou einai gia ta epipeda
+*/
+
 #pragma once
 
 #include <vector>

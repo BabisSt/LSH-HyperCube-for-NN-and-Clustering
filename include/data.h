@@ -1,3 +1,13 @@
+/*
+Auto to arxeio eiani gia na diabazei ta dataset kai na ta kanei parse
+thelei allagh gia to pws diabazei ta dataset.
+den exw katalabei pws akribws prepei na ta diabazei
+
+
+
+*/
+
+
 #pragma once
 
 #include <fstream>
@@ -8,7 +18,8 @@ using namespace std;
 class Data
 {
     private:
-       static int EuclideanDistance(const vector<uint8_t> &p1,const vector<uint8_t> &p2);
+       int EuclideanDistance(const vector<uint8_t> &p1,const vector<uint8_t> &p2);
+       static int ManhattanDistance(const vector<uint8_t> &p1, const vector<uint8_t> &p2);
 
     public:
         int n; // number of data
@@ -18,7 +29,7 @@ class Data
 
         Data();
 
-        int InitMnistDataSet(ifstream &inputFile);
+        int InitDataSet(ifstream &inputFile);
         int ReadQueryFile(ifstream &queryFile);
 
         int (*distanceFunction)(const vector<uint8_t> &p1,const vector<uint8_t> &p2);

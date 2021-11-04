@@ -1,3 +1,9 @@
+
+/*
+Auto to arxeio einai gia to input poy dinei o xrhsths
+Bazei ola auta pou dinei o xrhsths se mia class
+kai ta diaxeirizetai apo ekei
+*/
 #pragma once
 
 #include <fstream>

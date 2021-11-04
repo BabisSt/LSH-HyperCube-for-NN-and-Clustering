@@ -9,71 +9,12 @@ using namespace std;
 
 Data::Data()
 {
-    this->distanceFunction = &(this->EuclideanDistance);
+    this->distanceFunction = &(this->ManhattanDistance);
 }
 
-int Data::InitMnistDataSet(ifstream &inputFile)
+int Data::InitDataSet(ifstream &inputFile)
 {
-    int32_t a = 0 ;
-    uint8_t b = 0;
 
-    //magic number
-
-    inputFile.read((char *)(&a), sizeof(a));
-    if(!inputFile)
-    {
-        cerr << "Input file io error" << endl;
-        return -1;
-    }
-
-    //number of images
-    inputFile.read((char *)(&a), sizeof(a));
-    if(!inputFile)
-    {
-        cerr << "Input file io error" << endl;
-        return -1;
-    }
-
-    //from big endian to little endian
-    this->n = __builtin_bswap32(a);
-    cout << "number of images : " << this-> n << endl;
-
-    inputFile.read((char *)(&a), sizeof(a));
-    if(!inputFile)
-    {
-        cerr << "Input file io error" << endl;
-        return -1;
-    }
-    int x = __builtin_bswap32(a);
-
-    inputFile.read((char *)(&a), sizeof(a));
-    if(!inputFile)
-    {
-        cerr << "Input file io error" << endl;
-        return -1;
-    }
-    int y = __builtin_bswap32(a);
-
-    this->d = x*y;
-
-    for(int i =0; i< this->d;i++)
-    {
-        vector<uint8_t> image;
-
-        for(int j=0; j < this->d; j++)
-        {
-            inputFile.read((char *)(&b), sizeof(b));
-            if(!inputFile)
-            {
-                cerr << "read() from input file failed" << endl;
-                return -1;
-            }
-            image.push_back(b);
-        }
-        this->data.push_back(image);
-    }
-
-    return 0;
     
 }
 
@@ -118,6 +59,17 @@ int Data::EuclideanDistance(const vector<uint8_t> &p1,const vector<uint8_t> &p2)
     }
 
     return sqrt(d);
+}
+
+int Data::ManhattanDistance(const vector<uint8_t> &p1, const vector<uint8_t> &p2)
+{
+    int d=0;
+
+    for (int i = 0; i < int(p1.size()); i++)
+    {
+        d += abs(p2[i] - p1[i]);
+    }
+    return d;    
 }
 
 vector<pair<int, int>> Data::RangeSearch(vector<uint8_t> query, float R)
