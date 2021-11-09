@@ -24,10 +24,12 @@ int Data::InitDataSet(ifstream &inputFile)
     {
         istringstream iss(line);
         data.push_back(vector<uint8_t>());
+        this->n++;
 
         while (iss >> curr)
         {
             data[i].push_back((uint8_t)atoi(curr.c_str()));
+            this->d++;
         }
         i++;
     }
