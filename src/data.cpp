@@ -11,7 +11,9 @@ using namespace std;
 
 Data::Data()
 {
-    this->distanceFunction = &(this->ManhattanDistance);
+    this->d = 0;
+    this->n = 0;
+    this->distanceFunction = &(this->EuclideanDistance);
 }
 
 int Data::InitDataSet(ifstream &inputFile)
@@ -33,6 +35,8 @@ int Data::InitDataSet(ifstream &inputFile)
         }
         i++;
     }
+    cout << "d" << this->d << endl;
+    cout << "n" << this->n << endl;
     return 0;
 }
 

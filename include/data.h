@@ -18,7 +18,7 @@ using namespace std;
 class Data
 {
     private:
-       int EuclideanDistance(const vector<uint8_t> &p1,const vector<uint8_t> &p2);
+       static int EuclideanDistance(const vector<uint8_t> &p1,const vector<uint8_t> &p2);
        static int ManhattanDistance(const vector<uint8_t> &p1, const vector<uint8_t> &p2);
 
     public:

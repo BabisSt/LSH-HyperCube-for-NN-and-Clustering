@@ -111,7 +111,7 @@ int main(int argc, char *argv[])
             cout << "Would you like to run again with different input? [Y, N]" << endl;
             cin >> str;
 
-            if(!str.compare("Y") || !str.compare("N"))
+            if(!str.compare("Y") || !str.compare("y"))
             {
                 input.inputFile.close();
                 input.queryFile.close();
