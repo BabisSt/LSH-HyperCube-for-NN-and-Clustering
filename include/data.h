@@ -18,26 +18,26 @@ using namespace std;
 class Data
 {
     private:
-       static int EuclideanDistance(const vector<uint8_t> &p1,const vector<uint8_t> &p2);
-       static int ManhattanDistance(const vector<uint8_t> &p1, const vector<uint8_t> &p2);
+       static int EuclideanDistance(const vector<uint32_t> &p1,const vector<uint32_t> &p2);
+       //static int ManhattanDistance(const vector<uint32_t> &p1, const vector<uint32_t> &p2);
 
     public:
         int n; // number of data
         int d; // dimension
-        vector<vector<uint8_t>> data;
-        vector<vector<uint8_t>> queries;
+        vector<vector<uint32_t>> data;
+        vector<vector<uint32_t>> queries;
 
         Data();
 
         int InitDataSet(ifstream &inputFile);
         int ReadQueryFile(ifstream &queryFile);
 
-        int (*distanceFunction)(const vector<uint8_t> &p1,const vector<uint8_t> &p2);
+        int (*distanceFunction)(const vector<uint32_t> &p1,const vector<uint32_t> &p2);
 
         vector<pair<int,int>>
-        RangeSearch(vector<uint8_t> query, float R);
+        RangeSearch(vector<uint32_t> query, float R);
 
-        vector<pair<int, int>>  GetClosestNeighbors(const vector<uint8_t> &query,const vector<pair<int, vector<uint8_t>>> &data, const int &N);
-        vector<pair<int, int>>  BruteForceNeighbors(const vector<uint8_t> &query, const int &N);
+        vector<pair<int, int>>  GetClosestNeighbors(const vector<uint32_t> &query,const vector<pair<int, vector<uint32_t>>> &data, const int &N);
+        vector<pair<int, int>>  BruteForceNeighbors(const vector<uint32_t> &query, const int &N);
 
 };

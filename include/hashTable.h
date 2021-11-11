@@ -14,26 +14,22 @@ using namespace std;
 class hashTable
 {
     private:
-        // int d;
-        // uint32_t w,m,M;         //numeric type that guarantees 32 bits
-        // vector<uint32_t> md;    //sequence containers representing arrays that can change in size.
 
-        // int calculate_a (const uint8_t &xi, const int &si); //&xi reference
-        vector<double> v;
-        int w, t;
+        int w,t,M;
     public:
-        void calculate_v(vector<double> &v, int k, int d);
+        vector<vector<double>> v;
+
+        void calculate_v(vector<vector<double>> &v, int k, int d);
         void calculate_t(int w,int k);
-        // vector<vector<int>> S;
-        // vector<vector<tuple<uint32_t, int, reference_wrapper<vector<uint8_t>>>>> table;
+        
+        vector<vector<tuple<uint32_t, int, reference_wrapper<vector<uint32_t>>>>> table;
 
-        hashTable(int indexSize, int k, int d, int w);
-        // ~hashTable();
+        hashTable(int indexSize, int k, int d, int w,int M);
+        ~hashTable();
+        
+        int calculate_h(vector<uint32_t> &point, vector<double> &v);
 
-        // void calculate_s(vector<vector<int>> &S, int k , int d, int W);
-        // uint32_t calculate_h(const vector<uint8_t> &x, const vector<int> &s);
-
-        // void insertItem(uint32_t g, int index, vector<uint8_t> &point);
-        // vector<pair<int, reference_wrapper<vector<uint8_t>>>>
-        // getItems(const uint32_t &g);
+        void insertItem(uint32_t g, int index, vector<uint32_t> &point);
+        vector<pair<int, reference_wrapper<vector<uint32_t>>>>
+        getItems(const uint32_t &g);
 };
