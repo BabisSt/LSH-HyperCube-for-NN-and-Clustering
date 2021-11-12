@@ -10,19 +10,18 @@ using namespace std;
 
 
 
-hashTable::hashTable(int indexSize, int k, int d, int w,int M)    //thelei init oi metablites
+hashTable::hashTable(int indexSize, uint32_t k, uint32_t d, uint32_t w,uint32_t M)    //thelei init oi metablites
+    : d(d), w(w), M(M)
 {
     this->table.resize(indexSize);
-    this->M =2;
-    this->t = 2;
-    this->w= 2;
-    this->M =2;
     
     this->calculate_v(this->v,k,d);
 }
 
+hashTable::~hashTable() {}
 
-void hashTable::calculate_v(vector<vector<double>> &v,int k, int d)
+
+void hashTable::calculate_v(vector<vector<double>> &v,uint32_t k, uint32_t d)
 {
     default_random_engine re(chrono::steady_clock::now().time_since_epoch().count());
     normal_distribution<double> distribution(0, 1);
@@ -41,23 +40,22 @@ void hashTable::calculate_v(vector<vector<double>> &v,int k, int d)
 
 }
 
-
-void hashTable::calculate_t(int w,int k)
+void hashTable::calculate_t(uint32_t w,uint32_t k)
 {
     srand( (unsigned)time( NULL ) );
 
     for (int i = 0; i < k; i++)
     {
         this->t = ((rand() % w) + 1);
-        cout << this->t << endl;
     }
     
 }
 
-int hashTable::calculate_h(vector<uint32_t> &point, vector<double> &v)
+int hashTable::calculate_h(const vector<uint32_t> &point,const vector<double> &v,uint32_t k)
 {
     int x=0 ,result = 0;
     
+    calculate_t(this->w,k);
     for (int i = 0; i < point.size(); i++)
     {
         x +=point[i] * v[i];
@@ -67,8 +65,6 @@ int hashTable::calculate_h(vector<uint32_t> &point, vector<double> &v)
     return  result % this->M ;
 }
 
-
-hashTable::~hashTable() {}
 
 
 void hashTable::insertItem(uint32_t g, int index, vector<uint32_t> &point)           //pair: provides a way to store two heterogeneous objects as a single unit
@@ -87,5 +83,3 @@ vector<pair<int,reference_wrapper<vector<uint32_t>>>> hashTable::getItems(const 
 
     return result;
 }
-
-//get_index_size

@@ -7,11 +7,11 @@
 
 using namespace std;
 
-LSH::LSH(int k, int L, Data &data, uint32_t w)
-    : k(k), L(L), data(data), w(w)
+LSH::LSH(int k, int L, Data &data, uint32_t w, int r)
+    : k(k), L(L), data(data), w(w), r(r)
 {
     this->M = pow(2, 32 / k);
-
+    this->r = r;
     this->tables.resize(this->L);
 
     for (int i = 0; i < L; i++)
@@ -49,7 +49,7 @@ int LSH::Run(const vector<vector<uint32_t>> &queries, ofstream &outputFile, cons
 
         auto tTrue = chrono::duration_cast<chrono::milliseconds>(tStop - tStart);
 
-        this->print(outputFile, i, lshResult, trueResult, tLSH.count(), tTrue.count(), this->data.RangeSearch(queries[i], R));
+        //this->print(outputFile, i, lshResult, trueResult, tLSH.count(), tTrue.count(), this->data.RangeSearch(queries[i], R));
     }
 
     return 0;
@@ -60,9 +60,9 @@ void LSH::hashData()
 {
     for (int i = 0; i < this->L; i++)
     {
-        for (int j = 0; j < this->data.n; i++)
+        for (int j = 0; j < this->data.n; j++)
         {
-            uint32_t g = this->calculate_g(this->data.data[j], this->tables[i],this->r,this->tables[i]->get_index_size);
+            uint32_t g = this->calculate_g(this->data.data[j], this->tables[i]);
 
             this->tables[i]->insertItem(g, j, this->data.data[j]);
         }
@@ -72,43 +72,43 @@ void LSH::hashData()
 }
 
 
-uint32_t LSH::calculate_g(vector<uint32_t> &points , hashTable *ht,vector<double> r,uint32_t tableSize)
+uint32_t LSH::calculate_g(const vector<uint32_t> &points , hashTable *ht)
 {
     uint32_t g=0,result;
 
     for (int i = 0; i < this->k; i++)
     {
         
-        g = g + (r[i] * ht->calculate_h(points, ht->v[i]));
+        g = g + (this->r * ht->calculate_h(points, ht->v[i],this->k));
     }
     
-    result = g % tableSize;
+    result = g % this->data.n;      //this->Data.n == tableSize
     return result;
 }
 
-// vector<pair<int, int>> LSH::exec_query(const vector<uint32_t> &query, const int &N)
-// {
-//     unordered_set<int> pickedPoints;
-//     vector<pair<int, vector<uint32_t>>> possible_neighbors;
+vector<pair<int, int>> LSH::exec_query(const vector<uint32_t> &query, const int &N)
+{
+    unordered_set<int> pickedPoints;
+    vector<pair<int, vector<uint32_t>>> possible_neighbors;
 
-//     for (auto &table : this->tables)
-//     {
-//         uint32_t g = this->calculate_g(query,table);
+    for (auto &table : this->tables)
+    {
+        uint32_t g = this->calculate_g(query,table);
 
-//         for (auto &point : table->getItems(g))
-//         {
-//             if(pickedPoints.find(point.first) == pickedPoints.end()) // for duplicates
-//             {
-//                 pickedPoints.insert(point.first);
-//                 possible_neighbors.emplace_back(point.first, point.second);
-//             }
-//         }
+        for (auto &point : table->getItems(g))
+        {
+            if(pickedPoints.find(point.first) == pickedPoints.end()) // for duplicates
+            {
+                pickedPoints.insert(point.first);
+                possible_neighbors.emplace_back(point.first, point.second);
+            }
+        }
         
-//     }
+    }
 
-//     return this->data.GetClosestNeighbors(query, possible_neighbors, N);
+    return this->data.GetClosestNeighbors(query, possible_neighbors, N);
 
-// }
+}
 
 // void LSH::print(ofstream &outputFile,const int &query,vector<pair<int,int>> lshResult,vector<pair<int,int>> trueResult,const int64_t &tLSH, const int64_t &tTRUE,vector<pair<int,int>> rangeSearch)
 // {

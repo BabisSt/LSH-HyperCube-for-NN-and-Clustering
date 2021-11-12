@@ -14,22 +14,23 @@ using namespace std;
 class hashTable
 {
     private:
-
-        int w,t,M;
+        int d;
+        uint32_t w,t,M;
     public:
         vector<vector<double>> v;
 
-        void calculate_v(vector<vector<double>> &v, int k, int d);
-        void calculate_t(int w,int k);
+        void calculate_v(vector<vector<double>> &v, uint32_t k, uint32_t d);
+        void calculate_t(uint32_t w,uint32_t k);
         
         vector<vector<tuple<uint32_t, int, reference_wrapper<vector<uint32_t>>>>> table;
 
-        hashTable(int indexSize, int k, int d, int w,int M);
+        hashTable(int indexSize, uint32_t k, uint32_t d, uint32_t w,uint32_t M);
         ~hashTable();
         
-        int calculate_h(vector<uint32_t> &point, vector<double> &v);
+        int calculate_h(const vector<uint32_t> &point,const vector<double> &v,uint32_t k);
 
         void insertItem(uint32_t g, int index, vector<uint32_t> &point);
+
         vector<pair<int, reference_wrapper<vector<uint32_t>>>>
         getItems(const uint32_t &g);
 };

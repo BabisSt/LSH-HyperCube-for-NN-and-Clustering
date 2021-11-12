@@ -15,13 +15,13 @@ class LSH
         Data &data;
         uint32_t w, M;
 
-        vector<double> r;
+        int r;
 
         vector<hashTable *> tables;
 
         void hashData();
 
-        uint32_t calculate_g(vector<uint32_t> &points, hashTable *ht,vector<double> r,uint32_t tableSize );
+        uint32_t calculate_g(const vector<uint32_t> &points, hashTable *ht );
 
         void print(
                 ofstream &outputFile,
@@ -33,11 +33,11 @@ class LSH
         ); 
     
     public:
-        LSH(int , int L, Data &data, uint32_t w = 10000);
+        LSH(int , int L, Data &data, uint32_t w = 10000, int r= 5);
         ~LSH();
 
         int Run(const vector<vector<uint32_t>> &queries, ofstream &outputFile, const int &N, const int &R);
 
         vector<pair<int,int>>
-        exec_query(const vector<uint32_t> &query, const int &N);
+        exec_query(const vector<uint32_t> &query,const int &N);
 };

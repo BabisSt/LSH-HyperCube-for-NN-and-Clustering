@@ -99,56 +99,56 @@ vector<pair<int, int>> Data::RangeSearch(vector<uint32_t> query, float R)
     return result;
 }
 
-// vector<pair<int, int>> Data::GetClosestNeighbors(const vector<uint32_t> &query, const vector<pair<int, vector<uint32_t>>> &data, const int &N)
-// {
-//     vector<pair<int, int>> result;
+vector<pair<int, int>> Data::GetClosestNeighbors(const vector<uint32_t> &query, const vector<pair<int, vector<uint32_t>>> &data, const int &N)
+{
+    vector<pair<int, int>> result;
 
-//     auto cmp = [](pair<int, int> left, pair<int, int> right)
-//     {
-//         return left.first > right.first;
-//     };
+    auto cmp = [](pair<int, int> left, pair<int, int> right)
+    {
+        return left.first > right.first;
+    };
 
-//     priority_queue<pair<int, int>, vector<pair<int, int>>, decltype(cmp)> q(cmp);
+    priority_queue<pair<int, int>, vector<pair<int, int>>, decltype(cmp)> q(cmp);
 
-//     for (int i = 0; i < int(data.size()); i++)
-//     {
-//         q.push(make_pair(this->distanceFunction(data[i].second, query), data[i].first));
-//     }
+    for (int i = 0; i < int(data.size()); i++)
+    {
+        q.push(make_pair(this->distanceFunction(data[i].second, query), data[i].first));
+    }
 
-//     int min = (n < int(q.size())) ? N : q.size();
+    int min = (n < int(q.size())) ? N : q.size();
 
-//     for (int i = 0; i < min; i++)
-//     {
-//         result.push_back(q.top());
-//         q.pop();
-//     }
+    for (int i = 0; i < min; i++)
+    {
+        result.push_back(q.top());
+        q.pop();
+    }
 
-//     return result;
-// }
+    return result;
+}
 
-// vector<pair<int, int>> Data::BruteForceNeighbors(const vector<uint32_t> &query, const int &N)
-// {
-//     vector<pair<int, int>> result;
+vector<pair<int, int>> Data::BruteForceNeighbors(const vector<uint32_t> &query, const int &N)
+{
+    vector<pair<int, int>> result;
 
-//     auto cmp = [](pair<int, int> left, pair<int, int> right)
-//     {
-//         return left.first > right.first;
-//     };
+    auto cmp = [](pair<int, int> left, pair<int, int> right)
+    {
+        return left.first > right.first;
+    };
 
-//     priority_queue<pair<int, int>, vector<pair<int, int>>, decltype(cmp)> q(cmp);
+    priority_queue<pair<int, int>, vector<pair<int, int>>, decltype(cmp)> q(cmp);
 
-//     for (int i = 0; i < int(this->data.size()); i++)
-//     {
-//         q.push(make_pair(this->distanceFunction(this->data[i], query), i));
-//     }
+    for (int i = 0; i < int(this->data.size()); i++)
+    {
+        q.push(make_pair(this->distanceFunction(this->data[i], query), i));
+    }
 
-//     int min = (N < int(q.size())) ? N : q.size();
+    int min = (N < int(q.size())) ? N : q.size();
 
-//     for (int i = 0; i < min; i++)
-//     {
-//         result.push_back(q.top());
-//         q.pop();
-//     }
+    for (int i = 0; i < min; i++)
+    {
+        result.push_back(q.top());
+        q.pop();
+    }
 
-//     return result;
-// }
+    return result;
+}
