@@ -13,6 +13,7 @@ using namespace std;
 hashTable::hashTable(int indexSize, uint32_t k, uint32_t d, uint32_t w,uint32_t M)    //thelei init oi metablites
     : d(d), w(w), M(M)
 {
+    //cout << "index" << indexSize << endl;
     this->table.resize(indexSize);
     
     this->calculate_v(this->v,k,d);
@@ -58,10 +59,12 @@ int hashTable::calculate_h(const vector<uint32_t> &point,const vector<double> &v
     calculate_t(this->w,k);
     for (int i = 0; i < point.size(); i++)
     {
-        x +=point[i] * v[i];
+        x +=point[i] * abs(v[i]);
     }
 
     result = floor(double(x + this->t )/ double(this->w));
+    //cout << "pont size" << point.size() << endl;
+    //cout << "x" << x << " t" << this->t << "w" << this->w << endl;
     return  result % this->M ;
 }
 
@@ -69,6 +72,7 @@ int hashTable::calculate_h(const vector<uint32_t> &point,const vector<double> &v
 
 void hashTable::insertItem(uint32_t g, int index, vector<uint32_t> &point)           //pair: provides a way to store two heterogeneous objects as a single unit
 {
+    //cout << "g" << g << " size" <<this->table.size() << endl;
     this->table[g % this->table.size()].emplace_back(g,index,ref(point));           //emplace_back : inserts a new element at the end of the vector
 }
 

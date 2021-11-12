@@ -16,7 +16,7 @@ LSH::LSH(int k, int L, Data &data, uint32_t w, int r)
 
     for (int i = 0; i < L; i++)
     {
-        this->tables[i] = new hashTable(this->data.n / 32, this->k, this->data.d, this->w, this->M);
+        this->tables[i] = new hashTable(this->data.n, this->k, this->data.d, this->w, this->M); // this->data.n/ 32
     }
 
     cout<< "Running with w: " << w << " and M: " << this->M << endl;
@@ -49,7 +49,7 @@ int LSH::Run(const vector<vector<uint32_t>> &queries, ofstream &outputFile, cons
 
         auto tTrue = chrono::duration_cast<chrono::milliseconds>(tStop - tStart);
 
-        //this->print(outputFile, i, lshResult, trueResult, tLSH.count(), tTrue.count(), this->data.RangeSearch(queries[i], R));
+        this->print(outputFile, i, lshResult, trueResult, tLSH.count(), tTrue.count(), this->data.RangeSearch(queries[i], R));
     }
 
     return 0;
@@ -58,12 +58,13 @@ int LSH::Run(const vector<vector<uint32_t>> &queries, ofstream &outputFile, cons
 
 void LSH::hashData()
 {
+    //cout << "data.n" << this->data.n << " L" << this->L << endl;
     for (int i = 0; i < this->L; i++)
     {
         for (int j = 0; j < this->data.n; j++)
         {
             uint32_t g = this->calculate_g(this->data.data[j], this->tables[i]);
-
+            
             this->tables[i]->insertItem(g, j, this->data.data[j]);
         }
         
@@ -76,6 +77,7 @@ uint32_t LSH::calculate_g(const vector<uint32_t> &points , hashTable *ht)
 {
     uint32_t g=0,result;
 
+    
     for (int i = 0; i < this->k; i++)
     {
         
@@ -97,7 +99,7 @@ vector<pair<int, int>> LSH::exec_query(const vector<uint32_t> &query, const int 
 
         for (auto &point : table->getItems(g))
         {
-            if(pickedPoints.find(point.first) == pickedPoints.end()) // for duplicates
+            if(pickedPoints.find(point.first) == pickedPoints.end()) // for duplicates , phgaine mesa sta picked points kai an den uparxnoun balta
             {
                 pickedPoints.insert(point.first);
                 possible_neighbors.emplace_back(point.first, point.second);
@@ -110,24 +112,24 @@ vector<pair<int, int>> LSH::exec_query(const vector<uint32_t> &query, const int 
 
 }
 
-// void LSH::print(ofstream &outputFile,const int &query,vector<pair<int,int>> lshResult,vector<pair<int,int>> trueResult,const int64_t &tLSH, const int64_t &tTRUE,vector<pair<int,int>> rangeSearch)
-// {
-//     outputFile << "Query: " << query <<  endl;
+void LSH::print(ofstream &outputFile,const int &query,vector<pair<int,int>> lshResult,vector<pair<int,int>> trueResult,const int64_t &tLSH, const int64_t &tTRUE,vector<pair<int,int>> rangeSearch)
+{
+    outputFile << "Query: " << query <<  endl;
     
-//     for (int i = 0; i < int(lshResult.size()); i++)
-//     {
-//         outputFile << "Nearest neighbor-" << i << ": " << lshResult[i].second << endl;
-//         outputFile << "distanceLSH: " << lshResult[i].first << endl;
-//         outputFile << "distanceTrue: " << trueResult[i].first << endl;
-//     }
+    for (int i = 0; i < int(lshResult.size()); i++)
+    {
+        outputFile << "Nearest neighbor-" << i << ": " << lshResult[i].second << endl;
+        outputFile << "distanceLSH: " << lshResult[i].first << endl;
+        outputFile << "distanceTrue: " << trueResult[i].first << endl;
+    }
     
-//     outputFile << "tLSH: " << tLSH << endl;
-//     outputFile << "tTRUE: " << tTRUE << endl;
-//     outputFile << "R-near neighbors: " << endl;
+    outputFile << "tLSH: " << tLSH << endl;
+    outputFile << "tTRUE: " << tTRUE << endl;
+    outputFile << "R-near neighbors: " << endl;
 
-//     for (const auto &point : rangeSearch)
-//     {
-//         outputFile << point.second << endl;
-//     }
+    for (const auto &point : rangeSearch)
+    {
+        outputFile << point.second << endl;
+    }
     
-// }
+}

@@ -1,0 +1,24 @@
+Query: 0
+Nearest neighbor-0: 0
+distanceLSH: -2147483648
+distanceTrue: -2147483648
+Nearest neighbor-1: 1
+distanceLSH: -2147483648
+distanceTrue: -2147483648
+tLSH: 0
+tTRUE: 0
+R-near neighbors: 
+0
+1
+Query: 1
+Nearest neighbor-0: 0
+distanceLSH: -2147483648
+distanceTrue: -2147483648
+Nearest neighbor-1: 1
+distanceLSH: -2147483648
+distanceTrue: -2147483648
+tLSH: 0
+tTRUE: 0
+R-near neighbors: 
+0
+1

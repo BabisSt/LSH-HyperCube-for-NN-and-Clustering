@@ -95,7 +95,7 @@ int main(int argc, char *argv[])
 
             if(input.mode == _lsh)                          //an einai lsh
             {
-                LSH *lsh = new LSH(input.lsh_k, input.L, data, 10000,input.R);
+                LSH *lsh = new LSH(input.lsh_k, input.L, data, 100,input.R);
 
                 if(lsh->Run(data.queries, input.outputFile, input.N, input.R) == -1)
                 {

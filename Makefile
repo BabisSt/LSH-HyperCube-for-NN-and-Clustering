@@ -37,18 +37,17 @@ $(BDIR)/$(EXEC3): $(OBJ)
 
 run-lsh:
 	./$(BDIR)/$(EXEC1) \
-	-i ./assets/ok \
-	-q ./assets/query_small_id \
+	-i ./assets/test \
+	-q ./assets/test_query \
 	-o ./logs/logs.txt \
-	-N 50
+	-N 3
 
 valgrind-lsh:
 	valgrind --leak-check=full --track-origins=yes --show-leak-kinds=all ./$(BDIR)/$(EXEC1) \
-	-i ./assets/ok \
-	-q ./assets/query_small_id \
+	-i ./assets/test \
+	-q ./assets/test_query \
 	-o ./logs/logs.txt \
 	-N 10
-
 run-hc:
 	./$(BDIR)/$(EXEC2) \
 	-i ./assets/ok \

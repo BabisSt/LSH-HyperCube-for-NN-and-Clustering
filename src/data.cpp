@@ -103,26 +103,25 @@ vector<pair<int, int>> Data::GetClosestNeighbors(const vector<uint32_t> &query, 
 {
     vector<pair<int, int>> result;
 
-    auto cmp = [](pair<int, int> left, pair<int, int> right)
-    {
+    auto cmp = [](pair<int, int> left, pair<int, int> right){    
         return left.first > right.first;
     };
 
     priority_queue<pair<int, int>, vector<pair<int, int>>, decltype(cmp)> q(cmp);
-
+    
     for (int i = 0; i < int(data.size()); i++)
     {
         q.push(make_pair(this->distanceFunction(data[i].second, query), data[i].first));
     }
 
-    int min = (n < int(q.size())) ? N : q.size();
+    int min = (N < int(q.size())) ? N : q.size();
 
     for (int i = 0; i < min; i++)
     {
         result.push_back(q.top());
         q.pop();
     }
-
+    
     return result;
 }
 
