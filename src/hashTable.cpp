@@ -47,7 +47,7 @@ void hashTable::calculate_t(uint32_t w,uint32_t k)
 
     for (int i = 0; i < k; i++)
     {
-        this->t = ((rand() % w) + 1);
+        this->t.push_back(((rand() % w) + 1));
     }
     
 }
@@ -60,9 +60,9 @@ int hashTable::calculate_h(const vector<uint32_t> &point,const vector<double> &v
     for (int i = 0; i < point.size(); i++)
     {
         x +=point[i] * abs(v[i]);
+        result = floor(double(x + this->t[i] )/ double(this->w));
     }
-
-    result = floor(double(x + this->t )/ double(this->w));
+    //cout << result << endl;
     //cout << "pont size" << point.size() << endl;
     //cout << "x" << x << " t" << this->t << "w" << this->w << endl;
     return  result % this->M ;

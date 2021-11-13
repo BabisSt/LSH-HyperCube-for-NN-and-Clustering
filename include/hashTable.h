@@ -8,6 +8,7 @@ Auto to arxeio einai gia thn dhmiourgia twn hashtable pou einai gia ta epipeda
 #include <cmath>
 #include <functional> //provides the standard hash function. 
 #include <tuple>
+#include <list>
 
 using namespace std;
 
@@ -15,7 +16,8 @@ class hashTable
 {
     private:
         int d;
-        uint32_t w,t,M;
+        uint32_t w,M;
+        vector<uint32_t> t;
     public:
         vector<vector<double>> v;
 
