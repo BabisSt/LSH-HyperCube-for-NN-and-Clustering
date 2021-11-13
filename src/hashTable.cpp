@@ -29,9 +29,9 @@ void hashTable::calculate_v(vector<vector<double>> &v,uint32_t k, uint32_t d)
 
     v.resize(k, vector<double>(d));
 
-    for (int i = 0; i < k; i++)
+    for (uint32_t i = 0; i < k; i++)
     {
-        for (int j = 0; j < d; j++)
+        for (uint32_t j = 0; j < d; j++)
         {
            
             this->v[i][j] = distribution(re);
@@ -45,26 +45,34 @@ void hashTable::calculate_t(uint32_t w,uint32_t k)
 {
     srand( (unsigned)time( NULL ) );
 
-    for (int i = 0; i < k; i++)
+    for (uint32_t i = 0; i < k; i++)
     {
         this->t.push_back(((rand() % w) + 1));
+        //cout << "t " << this->t[i] << endl;
     }
     
 }
 
-int hashTable::calculate_h(const vector<uint32_t> &point,const vector<double> &v,uint32_t k)
+uint32_t hashTable::calculate_h(const vector<uint32_t> &point,const vector<double> &v,uint32_t k)
 {
-    int x=0 ,result = 0;
+    uint32_t x=0 ;
+    uint32_t result = 0;
     
-    calculate_t(this->w,k);
-    for (int i = 0; i < point.size(); i++)
+    for (uint32_t i = 0; i < point.size(); i++)
     {
+        calculate_t(this->w,k);
+        if(this->t[i] != 0)
+        {
         x +=point[i] * abs(v[i]);
-        result = floor(double(x + this->t[i] )/ double(this->w));
+        result = floor( double(x + this->t[i] )/ double(this->w) );
+
+        }
+        //cout << "x " << x << " t " << this->t[i] << " w " << this->w << endl;
+        //cout << "h " << result << endl;
+        //cout << " aaa " << double(x + this->t[i] ) << endl;
+        //cout << "pont size " << point[i] << endl;
     }
-    //cout << result << endl;
-    //cout << "pont size" << point.size() << endl;
-    //cout << "x" << x << " t" << this->t << "w" << this->w << endl;
+        //cout << "M "<< result % this->M << endl;
     return  result % this->M ;
 }
 

@@ -18,7 +18,7 @@ using namespace std;
 class Data
 {
     private:
-       static int EuclideanDistance(const vector<uint32_t> &p1,const vector<uint32_t> &p2);
+       static double EuclideanDistance(const vector<uint32_t> &p1,const vector<uint32_t> &p2);
        //static int ManhattanDistance(const vector<uint32_t> &p1, const vector<uint32_t> &p2);
 
     public:
@@ -32,7 +32,7 @@ class Data
         int InitDataSet(ifstream &inputFile);
         int ReadQueryFile(ifstream &queryFile);
 
-        int (*distanceFunction)(const vector<uint32_t> &p1,const vector<uint32_t> &p2);
+        double (*distanceFunction)(const vector<uint32_t> &p1,const vector<uint32_t> &p2);
 
         vector<pair<int,int>>
         RangeSearch(vector<uint32_t> query, float R);

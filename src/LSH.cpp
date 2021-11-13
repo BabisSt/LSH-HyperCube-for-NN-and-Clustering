@@ -16,7 +16,7 @@ LSH::LSH(int k, int L, Data &data, uint32_t w, int r)
 
     for (int i = 0; i < L; i++)
     {
-        this->tables[i] = new hashTable(this->data.n, this->k, this->data.d, this->w, this->M); // this->data.n/ 32
+        this->tables[i] = new hashTable(this->data.n/32, this->k, this->data.d, this->w, this->M); // this->data.n/ 32
     }
 
     cout<< "Running with w: " << w << " and M: " << this->M << endl;
@@ -85,6 +85,7 @@ uint32_t LSH::calculate_g(const vector<uint32_t> &points , hashTable *ht)
     }
     
     result = g % this->data.n;      //this->Data.n == tableSize
+    //cout << "result " << result<< endl;
     return result;
 }
 
@@ -112,7 +113,7 @@ vector<pair<int, int>> LSH::exec_query(const vector<uint32_t> &query, const int 
 
 }
 
-void LSH::print(ofstream &outputFile,const int &query,vector<pair<int,int>> lshResult,vector<pair<int,int>> trueResult,const int64_t &tLSH, const int64_t &tTRUE,vector<pair<int,int>> rangeSearch)
+void LSH::print(ofstream &outputFile,const int &query,vector<pair<int,int>> lshResult,vector<pair<int,int>> trueResult,const double &tLSH, const double &tTRUE,vector<pair<int,int>> rangeSearch)
 {
     outputFile << "Query: " << query <<  endl;
     
@@ -120,7 +121,7 @@ void LSH::print(ofstream &outputFile,const int &query,vector<pair<int,int>> lshR
     {
         outputFile << "Nearest neighbor-" << i << ": " << lshResult[i].second << endl;
         outputFile << "distanceLSH: " << lshResult[i].first << endl;
-        outputFile << "distanceTrue: " << trueResult[i].first << endl;
+        outputFile << "distanceTrue: " << trueResult[i].first << endl << endl;
     }
     
     outputFile << "tLSH: " << tLSH << endl;
@@ -131,5 +132,4 @@ void LSH::print(ofstream &outputFile,const int &query,vector<pair<int,int>> lshR
     {
         outputFile << point.second << endl;
     }
-    
 }

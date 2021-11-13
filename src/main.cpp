@@ -40,18 +40,6 @@ int main(int argc, char *argv[])
             return -1;
         }
 
-        //hashTable *ht = new hashTable(5,5,5,5,5);
-        
-        // vector<vector<double>> vec{ { 1, 2, 3,4 }, 
-        //                             { 4, 5, 6 }, 
-        //                             { 7, 8, 9, 4 } };
-        //vector<uint32_t> vec1 { 1, 2, 3 };
-        //ht->calculate_v(vec,5,5);
-        //ht->calculate_t(5,5);
-        //ht->calculate_h(vec1,vec[0]);
-       
-        //delete(ht);
-
         if(input.mode == _cluster)                                      //me cluster
         {
             kmeansplusplus *kmeans;
@@ -95,7 +83,7 @@ int main(int argc, char *argv[])
 
             if(input.mode == _lsh)                          //an einai lsh
             {
-                LSH *lsh = new LSH(input.lsh_k, input.L, data, 100,input.R);
+                LSH *lsh = new LSH(input.lsh_k, input.L, data, 10000,input.R);
 
                 if(lsh->Run(data.queries, input.outputFile, input.N, input.R) == -1)
                 {
@@ -105,14 +93,14 @@ int main(int argc, char *argv[])
             }
             else                                            //an einai hypercube
             {
-                // HyperCube *hc = new HyperCube(floor(log2(data.n)), input.M, input.probes, data);
+                HyperCube *hc = new HyperCube(floor(log2(data.n)), input.M, input.probes, data);
 
-                // if(hc->Run(data.queries, input.outputFile, input.N, input.R) ==  -1)
-                // {
-                //     cerr << "HyperCube::hyperCubeRun() failed" << endl;
-                // }
+                if(hc->Run(data.queries, input.outputFile, input.N, input.R) ==  -1)
+                {
+                    cerr << "HyperCube::hyperCubeRun() failed" << endl;
+                }
 
-                // delete hc;
+                delete hc;
             }
             
         }

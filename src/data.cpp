@@ -35,8 +35,8 @@ int Data::InitDataSet(ifstream &inputFile)
         }
         i++;
     }
-    cout << "d" << this->d << endl;
-    cout << "n" << this->n << endl;
+    //cout << "d" << this->d << endl;
+    //cout << "n" << this->n << endl;
     return 0;
 }
 
@@ -60,28 +60,18 @@ int Data::ReadQueryFile(ifstream &queryFile)
     return 0;
 }
 
-int Data::EuclideanDistance(const vector<uint32_t> &p1, const vector<uint32_t> &p2)
+double Data::EuclideanDistance(const vector<uint32_t> &p1, const vector<uint32_t> &p2)
 {
-    int d = 0;
+    unsigned int d = 0;
 
     for (size_t i = 0; i < p1.size(); i++)
     {
         d += pow(p2[i] - p1[i], 2);
     }
-
+    
     return sqrt(d);
 }
 
-// int Data::ManhattanDistance(const vector<uint32_t> &p1, const vector<uint32_t> &p2)
-// {
-//     int d = 0;
-
-//     for (int i = 0; i < int(p1.size()); i++)
-//     {
-//         d += abs(p2[i] - p1[i]);
-//     }
-//     return d;
-// }
 
 vector<pair<int, int>> Data::RangeSearch(vector<uint32_t> query, float R)
 {
@@ -94,8 +84,8 @@ vector<pair<int, int>> Data::RangeSearch(vector<uint32_t> query, float R)
         {
             result.emplace_back(d, i);
         }
+        //cout << d << endl;
     }
-
     return result;
 }
 
@@ -118,7 +108,7 @@ vector<pair<int, int>> Data::GetClosestNeighbors(const vector<uint32_t> &query, 
 
     for (int i = 0; i < min; i++)
     {
-        result.push_back(q.top());
+        result.push_back(q.top()); 
         q.pop();
     }
     

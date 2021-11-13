@@ -28,12 +28,12 @@ class LSH
                 const int &query,
                 vector<pair<int,int>> lshResult,
                 vector<pair<int,int>> trueResult,
-                const int64_t &tLSH, const int64_t &tTRUE,
+                const double &tLSH, const double &tTRUE,
                 vector<pair<int,int>> rangeSearch
         ); 
     
     public:
-        LSH(int , int L, Data &data, uint32_t w = 10000, int r= 5);
+        LSH(int , int L, Data &data, uint32_t w = 10000, int r= 10000);
         ~LSH();
 
         int Run(const vector<vector<uint32_t>> &queries, ofstream &outputFile, const int &N, const int &R);

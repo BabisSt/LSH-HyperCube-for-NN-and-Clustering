@@ -162,7 +162,7 @@ int Input::parseCmdOptions(const int &argc, char *argv[])
                 {
                     this->lsh_k = stoi(options[1]);
                 }
-                else if(!options[0].compare("max+number_M_hypercube:"))
+                else if(!options[0].compare("max_number_M_hypercube:"))
                 {
                     this->M = stoi(options[1]);
                 }

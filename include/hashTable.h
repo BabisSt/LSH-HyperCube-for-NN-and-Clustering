@@ -29,7 +29,7 @@ class hashTable
         hashTable(int indexSize, uint32_t k, uint32_t d, uint32_t w,uint32_t M);
         ~hashTable();
         
-        int calculate_h(const vector<uint32_t> &point,const vector<double> &v,uint32_t k);
+        uint32_t calculate_h(const vector<uint32_t> &point,const vector<double> &v,uint32_t k);
 
         void insertItem(uint32_t g, int index, vector<uint32_t> &point);
 

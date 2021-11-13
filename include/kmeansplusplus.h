@@ -28,14 +28,14 @@ class kmeansplusplus
         Data &data;
         LSH *lsh = nullptr;
         HyperCube *cube = nullptr;
-        vector<vector<uint8_t>> centroids;
+        vector<vector<uint32_t>> centroids;
 
         void initCentroids();
-        uint32_t minDinstance_from_Centroids(const vector<uint8_t> &point);
+        uint32_t minDinstance_from_Centroids(const vector<uint32_t> &point);
         int findNextCentroid(const vector<double> &P, const double x);        //used for initialization
-        int median(vector<uint8_t> &v);
-        int minCentroid(const vector<uint8_t> &point);
-        int nextCentroid(const vector<uint8_t> &point);
+        int median(vector<uint32_t> &v);
+        int minCentroid(const vector<uint32_t> &point);
+        int nextCentroid(const vector<uint32_t> &point);
         void print(const vector<vector<int>> &clusters, ofstream &outputFile, int64_t time, vector<double> silouette);
 
         vector<vector<int>> LloydsClustering();
