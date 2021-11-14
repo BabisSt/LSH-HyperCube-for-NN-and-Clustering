@@ -17,7 +17,7 @@ int main(int argc, char *argv[])
 
     srand(time(NULL));
 
-    if(input.parseCmdOptions(argc, argv) == -1)                 //pairnoume to input pou mas dinei o xrhsths
+    if(input.Parse_Input_Options(argc, argv) == -1)                 //pairnoume to input pou mas dinei o xrhsths
     {
         cerr << "input::ParseCmdOptions() failed" << endl;
     }
@@ -31,10 +31,10 @@ int main(int argc, char *argv[])
         {
             cout << "Please provide a path to an input file" << endl;   //dinoume path gia to dataset
             cin >> file;
-            input.OpenInputFile(file);                                  //anoigei to arxeio
+            input.Open_Input_File(file);                                  //anoigei to arxeio
         }
 
-        if(data.InitDataSet(input.inputFile) == -1)                     //diabazei ta dedomena tou arxeio kai ta ftiaxnei
+        if(data.Init_DataSet(input.inputFile) == -1)                     //diabazei ta dedomena tou arxeio kai ta ftiaxnei
         {
             cerr << "Data::InitDataset() failed" << endl;
             return -1;
@@ -72,7 +72,7 @@ int main(int argc, char *argv[])
             {
                 cout << "Please provide a path to a query file" << endl;
                 cin >> file;
-                input.OpenQueryFile(file);
+                input.Open_Query_File(file);
             }
 
             if(data.ReadQueryFile(input.queryFile) == -1)     //to diabazoume

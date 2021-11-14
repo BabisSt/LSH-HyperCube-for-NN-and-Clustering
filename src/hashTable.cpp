@@ -13,9 +13,7 @@ using namespace std;
 hashTable::hashTable(int indexSize, uint32_t k, uint32_t d, uint32_t w,uint32_t M)    //thelei init oi metablites
     : d(d), w(w), M(M)
 {
-    //cout << "index" << indexSize << endl;
     this->table.resize(indexSize);
-    
     this->calculate_v(this->v,k,d);
 }
 
@@ -48,7 +46,6 @@ void hashTable::calculate_t(uint32_t w,uint32_t k)
     for (uint32_t i = 0; i < k; i++)
     {
         this->t.push_back(((rand() % w) + 1));
-        //cout << "t " << this->t[i] << endl;
     }
     
 }
@@ -67,28 +64,24 @@ uint32_t hashTable::calculate_h(const vector<uint32_t> &point,const vector<doubl
         result = floor( double(x + this->t[i] )/ double(this->w) );
 
         }
-        //cout << "x " << x << " t " << this->t[i] << " w " << this->w << endl;
-        //cout << "h " << result << endl;
-        //cout << " aaa " << double(x + this->t[i] ) << endl;
-        //cout << "pont size " << point[i] << endl;
     }
-        //cout << "M "<< result % this->M << endl;
+
     return  result % this->M ;
 }
 
 
-
-void hashTable::insertItem(uint32_t g, int index, vector<uint32_t> &point)           //pair: provides a way to store two heterogeneous objects as a single unit
+void hashTable::Insert_Item(uint32_t g, int index, vector<uint32_t> &point)           
 {
-    //cout << "g" << g << " size" <<this->table.size() << endl;
-    this->table[g % this->table.size()].emplace_back(g,index,ref(point));           //emplace_back : inserts a new element at the end of the vector
+   
+    this->table[g % this->table.size()].emplace_back(g,index,ref(point));           
 }
 
-vector<pair<int,reference_wrapper<vector<uint32_t>>>> hashTable::getItems(const uint32_t &g)
+
+vector<pair<int,reference_wrapper<vector<uint32_t>>>> hashTable::Get_Items(const uint32_t &g)
 {
     vector<pair<int, reference_wrapper<vector<uint32_t>>>> result;
 
-    for (auto &bucket: this->table[g % this->table.size()])     // auto: directs the compiler to use the initialization expression of a declared variable to deduce its type
+    for (auto &bucket: this->table[g % this->table.size()])     
     {
         result.emplace_back(get<1>(bucket), get<2>(bucket));
     }

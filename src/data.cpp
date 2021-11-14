@@ -16,7 +16,7 @@ Data::Data()
     this->distanceFunction = &(this->EuclideanDistance);
 }
 
-int Data::InitDataSet(ifstream &inputFile)
+int Data::Init_DataSet(ifstream &inputFile)
 {
     string line;
     string curr;
@@ -35,8 +35,7 @@ int Data::InitDataSet(ifstream &inputFile)
         }
         i++;
     }
-    //cout << "d" << this->d << endl;
-    //cout << "n" << this->n << endl;
+
     return 0;
 }
 
@@ -73,7 +72,7 @@ double Data::EuclideanDistance(const vector<uint32_t> &p1, const vector<uint32_t
 }
 
 
-vector<pair<int, int>> Data::RangeSearch(vector<uint32_t> query, float R)
+vector<pair<int, int>> Data::Range_Search(vector<uint32_t> query, float R)
 {
     vector<pair<int, int>> result;
 
@@ -84,12 +83,11 @@ vector<pair<int, int>> Data::RangeSearch(vector<uint32_t> query, float R)
         {
             result.emplace_back(d, i);
         }
-        //cout << d << endl;
     }
     return result;
 }
 
-vector<pair<int, int>> Data::GetClosestNeighbors(const vector<uint32_t> &query, const vector<pair<int, vector<uint32_t>>> &data, const int &N)
+vector<pair<int, int>> Data::Get_Closest_Neighbors(const vector<uint32_t> &query, const vector<pair<int, vector<uint32_t>>> &data, const int &N)
 {
     vector<pair<int, int>> result;
 
@@ -115,7 +113,7 @@ vector<pair<int, int>> Data::GetClosestNeighbors(const vector<uint32_t> &query, 
     return result;
 }
 
-vector<pair<int, int>> Data::BruteForceNeighbors(const vector<uint32_t> &query, const int &N)
+vector<pair<int, int>> Data::Brute_Force_Neighbors(const vector<uint32_t> &query, const int &N)
 {
     vector<pair<int, int>> result;
 

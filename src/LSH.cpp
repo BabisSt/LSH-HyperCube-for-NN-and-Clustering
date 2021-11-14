@@ -16,7 +16,7 @@ LSH::LSH(int k, int L, Data &data, uint32_t w, int r)
 
     for (int i = 0; i < L; i++)
     {
-        this->tables[i] = new hashTable(this->data.n/32, this->k, this->data.d, this->w, this->M); // this->data.n/ 32
+        this->tables[i] = new hashTable(this->data.n/32, this->k, this->data.d, this->w, this->M); 
     }
 
     cout<< "Running with w: " << w << " and M: " << this->M << endl;
@@ -44,12 +44,12 @@ int LSH::Run(const vector<vector<uint32_t>> &queries, ofstream &outputFile, cons
         auto tLSH = chrono::duration_cast<chrono::milliseconds>(lshStop - lshStart);
 
         auto tStart = chrono::high_resolution_clock::now();
-        vector<pair<int, int>> trueResult = this->data.BruteForceNeighbors(queries[i], N);
+        vector<pair<int, int>> trueResult = this->data.Brute_Force_Neighbors(queries[i], N);
         auto tStop = chrono::high_resolution_clock::now();
 
         auto tTrue = chrono::duration_cast<chrono::milliseconds>(tStop - tStart);
 
-        this->print(outputFile, i, lshResult, trueResult, tLSH.count(), tTrue.count(), this->data.RangeSearch(queries[i], R));
+        this->print(outputFile, i, lshResult, trueResult, tLSH.count(), tTrue.count(), this->data.Range_Search(queries[i], R));
     }
 
     return 0;
@@ -58,14 +58,13 @@ int LSH::Run(const vector<vector<uint32_t>> &queries, ofstream &outputFile, cons
 
 void LSH::hashData()
 {
-    //cout << "data.n" << this->data.n << " L" << this->L << endl;
     for (int i = 0; i < this->L; i++)
     {
         for (int j = 0; j < this->data.n; j++)
         {
             uint32_t g = this->calculate_g(this->data.data[j], this->tables[i]);
             
-            this->tables[i]->insertItem(g, j, this->data.data[j]);
+            this->tables[i]->Insert_Item(g, j, this->data.data[j]);
         }
         
     }
@@ -85,7 +84,7 @@ uint32_t LSH::calculate_g(const vector<uint32_t> &points , hashTable *ht)
     }
     
     result = g % this->data.n;      //this->Data.n == tableSize
-    //cout << "result " << result<< endl;
+    
     return result;
 }
 
@@ -98,7 +97,7 @@ vector<pair<int, int>> LSH::exec_query(const vector<uint32_t> &query, const int 
     {
         uint32_t g = this->calculate_g(query,table);
 
-        for (auto &point : table->getItems(g))
+        for (auto &point : table->Get_Items(g))
         {
             if(pickedPoints.find(point.first) == pickedPoints.end()) // for duplicates , phgaine mesa sta picked points kai an den uparxnoun balta
             {
@@ -109,7 +108,7 @@ vector<pair<int, int>> LSH::exec_query(const vector<uint32_t> &query, const int 
         
     }
 
-    return this->data.GetClosestNeighbors(query, possible_neighbors, N);
+    return this->data.Get_Closest_Neighbors(query, possible_neighbors, N);
 
 }
 

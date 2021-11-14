@@ -1,9 +1,5 @@
 /*
 Auto to arxeio eiani gia na diabazei ta dataset kai na ta kanei parse
-thelei allagh gia to pws diabazei ta dataset.
-den exw katalabei pws akribws prepei na ta diabazei
-
-
 
 */
 
@@ -19,7 +15,6 @@ class Data
 {
     private:
        static double EuclideanDistance(const vector<uint32_t> &p1,const vector<uint32_t> &p2);
-       //static int ManhattanDistance(const vector<uint32_t> &p1, const vector<uint32_t> &p2);
 
     public:
         int n; // number of data
@@ -29,15 +24,14 @@ class Data
 
         Data();
 
-        int InitDataSet(ifstream &inputFile);
-        int ReadQueryFile(ifstream &queryFile);
+        int Init_DataSet(ifstream &inputFile);       //dhmiourgia tou dataset
+        int ReadQueryFile(ifstream &queryFile);     //dhmourgia tou queryset
 
         double (*distanceFunction)(const vector<uint32_t> &p1,const vector<uint32_t> &p2);
 
-        vector<pair<int,int>>
-        RangeSearch(vector<uint32_t> query, float R);
+        vector<pair<int,int>>Range_Search(vector<uint32_t> query, float R);
 
-        vector<pair<int, int>>  GetClosestNeighbors(const vector<uint32_t> &query,const vector<pair<int, vector<uint32_t>>> &data, const int &N);
-        vector<pair<int, int>>  BruteForceNeighbors(const vector<uint32_t> &query, const int &N);
+        vector<pair<int, int>>  Get_Closest_Neighbors(const vector<uint32_t> &query,const vector<pair<int, vector<uint32_t>>> &data, const int &N);
+        vector<pair<int, int>>  Brute_Force_Neighbors(const vector<uint32_t> &query, const int &N);
 
 };

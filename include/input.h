@@ -36,9 +36,9 @@ class Input
         Input();
         ~Input();
 
-        int parseCmdOptions(const int &argc, char *argv[]);
+        int Parse_Input_Options(const int &argc, char *argv[]);
 
-        int OpenInputFile(const string &file);
-        int OpenQueryFile(const string &file);
+        int Open_Input_File(const string &file);
+        int Open_Query_File(const string &file);
 
 };

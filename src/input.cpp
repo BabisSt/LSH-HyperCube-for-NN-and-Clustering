@@ -49,7 +49,7 @@ char *Input::getCmdOption(char **begin, char **end, const string &option)
     return nullptr;
 }
 
-int Input::OpenInputFile(const string &file)
+int Input::Open_Input_File(const string &file)
 {
     this->inputFile.open(file, ifstream::in | ifstream::binary);
     if(!this->inputFile)
@@ -60,7 +60,7 @@ int Input::OpenInputFile(const string &file)
     return 0;
 }
 
-int Input::OpenQueryFile(const string &file)
+int Input::Open_Query_File(const string &file)
 {
     this->queryFile.open(file, ifstream::in | ifstream::binary);
     if(!this->queryFile)
@@ -71,7 +71,7 @@ int Input::OpenQueryFile(const string &file)
     return 0;
 }
 
-int Input::parseCmdOptions(const int &argc, char *argv[])
+int Input::Parse_Input_Options(const int &argc, char *argv[])
 {
     char *val = nullptr;
     string str = argv[0];

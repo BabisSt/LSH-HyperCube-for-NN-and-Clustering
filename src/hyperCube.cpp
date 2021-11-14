@@ -6,11 +6,6 @@
 
 using namespace std;
 
-// /*
-// use 2 unordered sets instead of map as they dont add time complexity for searching
-// since 2 O(1) == O(1)
-// while using less space since they only store the keys and not the values asssociated with them
-// */
 
 f::f() {}
 
@@ -83,12 +78,12 @@ int HyperCube::Run(const vector<vector<uint32_t>> &queries, ofstream &outputFile
         auto tCube = chrono::duration_cast<chrono::milliseconds>(cubeStop - cubeStart);
 
         auto tStart = chrono::high_resolution_clock::now();
-        vector<pair<int, int>> trueResult = this->data.BruteForceNeighbors(queries[i], N);
+        vector<pair<int, int>> trueResult = this->data.Brute_Force_Neighbors(queries[i], N);
         auto tStop = chrono::high_resolution_clock::now();
 
         auto tTrue = chrono::duration_cast<chrono::milliseconds>(tStop - tStart);
 
-        this->print(outputFileint, i, cubeResult, trueResult, tCube.count(), tTrue.count(), this->data.RangeSearch(queries[i], R));
+        this->print(outputFileint, i, cubeResult, trueResult, tCube.count(), tTrue.count(), this->data.Range_Search(queries[i], R));
     }
 
     return 0;
@@ -105,15 +100,15 @@ void HyperCube::hashData()
             s +=to_string(this->fTable[j]->calculate_f(to_string(this->ht->calculate_h(this->data.data[i], this->ht->v[j],this->k))));
         }
 
-        this->hyperCubeInsert(s,i, this->data.data[i]);
+        this->HyperCube_Insert(s,i, this->data.data[i]);
         
     }
     
 }
 
-void HyperCube::hyperCubeInsert(const string &s, int index, vector<uint32_t> &point)
+void HyperCube::HyperCube_Insert(const string &s, int index, vector<uint32_t> &point)
 {
-    this->ht->insertItem(stoi(s, nullptr, 2), index, point);
+    this->ht->Insert_Item(stoi(s, nullptr, 2), index, point);
 }
 
 vector<pair<int, int>> HyperCube::exec_query(const vector<uint32_t> &query, const int &N)
@@ -130,14 +125,14 @@ vector<pair<int, int>> HyperCube::exec_query(const vector<uint32_t> &query, cons
         s = s + to_string(this->fTable[i]->calculate_f(to_string(this->ht->calculate_h(query, this->ht->v[i],this->k))));
     }
 
-    bucketList = HammingDist(s, probes);
+    bucketList = Hamming_Distance(s, probes);
     bucketList.push_front(s);
 
     it = bucketList.begin();
     while (counter < M && it != bucketList.end())
     {
         m  = stoi(*it, nullptr, 2);
-        for (auto &image : this->ht->getItems(m))
+        for (auto &image : this->ht->Get_Items(m))
         {
             possible_neighbors.emplace_back(image.first, image.second);
             counter++;
@@ -148,11 +143,11 @@ vector<pair<int, int>> HyperCube::exec_query(const vector<uint32_t> &query, cons
         
     }
 
-    return this->data.GetClosestNeighbors(query, possible_neighbors, N);
+    return this->data.Get_Closest_Neighbors(query, possible_neighbors, N);
     
 }
 
-string HyperCube::toBinary(int n, int size)
+string HyperCube::to_Binary(int n, int size)
 {
     string r;
 
@@ -187,7 +182,7 @@ int HyperCube::hamming(string str1, string str2)
     return count;
 }
 
-list<string> HyperCube::HammingDist(const string s, int probes)
+list<string> HyperCube::Hamming_Distance(const string s, int probes)
 {
     list<string> l;
     string curr;
@@ -199,7 +194,7 @@ list<string> HyperCube::HammingDist(const string s, int probes)
     {
         for (int  i = 0; i < pow(2, s.size()); i++)
         {
-            curr = toBinary(i, s.size());
+            curr = to_Binary(i, s.size());
             dist = hamming(s,curr);
             if(dist == level)
             {

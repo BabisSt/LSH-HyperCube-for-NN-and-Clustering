@@ -32,14 +32,11 @@ class HyperCube
         hashTable *ht;
         vector<f *> fTable;
 
-        uint32_t calculate_h(const vector<uint32_t> &x, const vector<int> &s);
-        int calculate_a(const uint32_t &xi, const int &si);
-
-        string toBinary(int n, int size);
+        string to_Binary(int n, int size);
 
         int hamming(string str1, string str2);
 
-        list<string> HammingDist(string s, int probes);
+        list<string> Hamming_Distance(string s, int probes);
 
         void print(
             ofstream &outputfile,
@@ -50,10 +47,10 @@ class HyperCube
             vector<pair<int, int>> rangeSearch);
         
         void hashData();
-        void hyperCubeInsert(const string &s, int index, vector<uint32_t> &point);
+        void HyperCube_Insert(const string &s, int index, vector<uint32_t> &point);
     
     public:
-        HyperCube(int k, int M, int probes, Data &data, uint32_t w = 40000);
+        HyperCube(int k, int M, int probes, Data &data, uint32_t w = 10000);
         ~HyperCube();
 
         int Run(const vector<vector<uint32_t>> &queries, ofstream &outputFileint, const int &N, const int &R);
