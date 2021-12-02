@@ -27,6 +27,15 @@ kmeansplusplus::kmeansplusplus(const int &Clusters, const bool &complete, const 
     this->lsh = new LSH(lsh_k, L, data);
 }
 
+//hypercube
+kmeansplusplus::kmeansplusplus(const int &Clusters, const bool &complete, const int &cube_k, const int &M, const int &probes, Data &data)
+    : nClusters(Clusters), complete(complete), cube_k(cube_k), M(M), probes(probes), data(data)
+{
+    this->method = _HyperCube;
+
+    this->cube = new HyperCube(cube_k, M, probes, data);
+}
+
 kmeansplusplus::~kmeansplusplus()
 {
     if (this->lsh != nullptr)
@@ -55,6 +64,9 @@ int kmeansplusplus::Run(ofstream &outputFile)
 
         case _LSH:
             clusters = this->LSHClustering();
+            break;
+        case _HyperCube:
+            clusters = this->HyperCubeClustering();
             break;
         }
 
@@ -203,6 +215,37 @@ vector<vector<int>> kmeansplusplus::LSHClustering()
     return clusters;
 }
 
+vector<vector<int>> kmeansplusplus::HyperCubeClustering()
+{
+    vector<vector<int>> clusters(this->nClusters);
+    unordered_set<int> pickedPoints;
+
+    for (int i = 0; i < this->nClusters; i++)
+    {
+        for (auto &point : this->cube->exec_query(this->centroids[i], this->data.n / this->nClusters))
+        {
+            if (pickedPoints.find(point.second) == pickedPoints.end())
+            {
+                pickedPoints.insert(point.second);
+                clusters[i].push_back(point.second);
+            }
+        }
+    }
+
+    if (int(pickedPoints.size()) < this->data.n)
+    {
+        for (int i = 0; i < this->data.n; i++)
+        {
+            if (pickedPoints.find(i) == pickedPoints.end())
+            {
+                clusters[this->minCentroid(this->data.data[i])].push_back(i);
+            }
+        }
+    }
+
+    return clusters;
+}
+
 int kmeansplusplus::minCentroid(const vector<uint32_t> &point)
 {
     int index = -1, minDistance = INT32_MAX;
@@ -284,6 +327,9 @@ void kmeansplusplus::print(const vector<vector<int>> &clusters, ofstream &output
         break;
     case _LSH:
         outputFile << "Algorithm: LSH" << endl;
+        break;
+    case _HyperCube:
+        outputFile << "Algorithm: HyperCube" << endl;
         break;
     }
 
