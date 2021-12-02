@@ -54,7 +54,6 @@ HyperCube::HyperCube(int k, int M, int probes, Data &data, uint32_t w)
     }
 
     hashData();
-    
 }
 
 HyperCube::~HyperCube()
