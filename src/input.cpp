@@ -10,27 +10,28 @@
 
 using namespace std;
 
-Input::Input() 
-{}
+Input::Input()
+{
+}
 
 Input::~Input()
 {
-    if(inputFile.is_open())
+    if (inputFile.is_open())
     {
         inputFile.close();
     }
 
-    if(queryFile.is_open())
+    if (queryFile.is_open())
     {
         queryFile.close();
     }
 
-    if(outputFile.is_open())
+    if (outputFile.is_open())
     {
         outputFile.close();
     }
 
-    if(method != nullptr)
+    if (method != nullptr)
     {
         free(method);
     }
@@ -38,12 +39,14 @@ Input::~Input()
 
 char *Input::getCmdOption(char **begin, char **end, const string &option)
 {
-    char **itr = find(begin,end, option);
+    char **itr = find(begin, end, option);
 
-    if(itr != end && ++itr != end)
+    cout << endl
+         << *itr << " " << *(itr + 1) << endl;
+
+    if ((itr != end) && (++itr != end))
     {
         return *itr;
-        cout << itr << endl;
     }
 
     return nullptr;
@@ -52,7 +55,7 @@ char *Input::getCmdOption(char **begin, char **end, const string &option)
 int Input::Open_Input_File(const string &file)
 {
     this->inputFile.open(file, ifstream::in | ifstream::binary);
-    if(!this->inputFile)
+    if (!this->inputFile)
     {
         perror("open()");
     }
@@ -63,7 +66,7 @@ int Input::Open_Input_File(const string &file)
 int Input::Open_Query_File(const string &file)
 {
     this->queryFile.open(file, ifstream::in | ifstream::binary);
-    if(!this->queryFile)
+    if (!this->queryFile)
     {
         perror("open()");
     }
@@ -76,32 +79,30 @@ int Input::Parse_Input_Options(const int &argc, char *argv[])
     char *val = nullptr;
     string str = argv[0];
 
-    if((val = this->getCmdOption(argv,argv + argc, "-i")) !=nullptr)
+    if ((val = this->getCmdOption(argv, argv + argc, "-i")) != nullptr)
     {
         try
         {
             this->inputFile.open(val, ifstream::in | ifstream::binary);
         }
-        catch(const ifstream::failure &e)
+        catch (const ifstream::failure &e)
         {
             perror("open()");
-            cerr<< "Failed to open " << val << endl;
+            cerr << "Failed to open " << val << endl;
         }
-        
     }
 
-    if((val = this->getCmdOption(argv,argv + argc, "-o")) !=nullptr)
+    if ((val = this->getCmdOption(argv, argv + argc, "-o")) != nullptr)
     {
         try
         {
             this->outputFile.open(val, ofstream::out | ofstream::trunc);
         }
-        catch(const ofstream::failure &e)
+        catch (const ofstream::failure &e)
         {
             perror("open()");
-            cerr<< "Failed to open " << val << endl;
+            cerr << "Failed to open " << val << endl;
         }
-        
     }
     else
     {
@@ -110,15 +111,14 @@ int Input::Parse_Input_Options(const int &argc, char *argv[])
             this->outputFile.open("./logs/logs.txt", ofstream::out | ofstream::trunc);
             cout << "Output file ./logs/logs.txt" << endl;
         }
-        catch(const ofstream::failure &e)
+        catch (const ofstream::failure &e)
         {
             perror("open()");
-            cerr<< "Failed to open ./logs/logs.txt " << endl;
+            cerr << "Failed to open ./logs/logs.txt " << endl;
         }
-        
     }
 
-    if(string(argv[0]).find("cluster") != string::npos)
+    if (string(argv[0]).find("cluster") != string::npos)
     {
         this->mode = _cluster;
         this->lsh_k = 4;
@@ -127,7 +127,7 @@ int Input::Parse_Input_Options(const int &argc, char *argv[])
         this->M = 10;
         this->probes = 2;
 
-        if((val = this->getCmdOption(argv,argv + argc, "-c")) !=nullptr)
+        if ((val = this->getCmdOption(argv, argv + argc, "-c")) != nullptr)
         {
             ifstream confFile;
 
@@ -135,53 +135,51 @@ int Input::Parse_Input_Options(const int &argc, char *argv[])
             {
                 confFile.open(val, ifstream::in);
             }
-            catch(const ifstream::failure &e)
+            catch (const ifstream::failure &e)
             {
                 perror("open()");
                 cerr << e.what() << endl;
-                cerr<< "Failed to open " << val << endl;
+                cerr << "Failed to open " << val << endl;
                 return -1;
             }
-            
+
             for (string line; getline(confFile, line);)
             {
                 istringstream ss(line);
                 istream_iterator<string> begin(ss), end;
 
-                vector<string> options(begin,end);
+                vector<string> options(begin, end);
 
-                if(!options[0].compare("number_of_clusters:"))
+                if (!options[0].compare("number_of_clusters:"))
                 {
-                    this->nClusters = stoi(options[1]);
+                    this->nClusters = atoi(options[1].c_str());
                 }
-                else if(!options[0].compare("number_of_vector_hash_tables:"))
+                else if (!options[0].compare("number_of_vector_hash_tables:"))
                 {
-                    this->L = stoi(options[1]);
+                    this->L = atoi(options[1].c_str());
                 }
-                else if(!options[0].compare("number_of_vector_hash_functions:"))
+                else if (!options[0].compare("number_of_vector_hash_functions:"))
                 {
-                    this->lsh_k = stoi(options[1]);
+                    this->lsh_k = atoi(options[1].c_str());
                 }
-                else if(!options[0].compare("max_number_M_hypercube:"))
+                else if (!options[0].compare("max_number_M_hypercube:"))
                 {
-                    this->M = stoi(options[1]);
+                    this->M = atoi(options[1].c_str());
                 }
-                else if(!options[0].compare("number_of_hypercube_dimensions:"))
+                else if (!options[0].compare("number_of_hypercube_dimensions:"))
                 {
-                    this->cube_k = stoi(options[1]);
+                    this->cube_k = atoi(options[1].c_str());
                 }
-                else if(!options[0].compare("number_of_probes:"))
+                else if (!options[0].compare("number_of_probes:"))
                 {
-                    this->probes = stoi(options[1]);
+                    this->probes = atoi(options[1].c_str());
                 }
                 else
                 {
                     cout << "unknown option in .conf file" << endl;
                 }
-            
             }
             confFile.close();
-            
         }
         else
         {
@@ -189,62 +187,60 @@ int Input::Parse_Input_Options(const int &argc, char *argv[])
             return -1;
         }
 
-        if((val = this->getCmdOption(argv,argv + argc, "-complete")) !=nullptr)
+        if ((val = this->getCmdOption(argv, argv + argc, "-complete")) != nullptr)
         {
             this->complete = true;
         }
 
-        if((val = this->getCmdOption(argv,argv + argc, "-m")) !=nullptr)
+        if ((val = this->getCmdOption(argv, argv + argc, "-m")) != nullptr)
         {
             if (this->method == nullptr)
             {
                 this->method = strdup(val);
             }
-            
         }
-        
     }
     else
     {
         this->N = 1;
         this->R = 10000;
 
-        if((val = this->getCmdOption(argv,argv + argc, "-q")) !=nullptr)
+        if ((val = this->getCmdOption(argv, argv + argc, "-q")) != nullptr)
         {
             try
             {
                 this->queryFile.open(val, ifstream::in);
             }
-            catch(const ifstream::failure &e)
+            catch (const ifstream::failure &e)
             {
                 perror("open()");
-                cerr<< "Failed to open " << val << endl;
+                cerr << "Failed to open " << val << endl;
                 return -1;
             }
         }
 
-        if((val = this->getCmdOption(argv,argv + argc, "-N")) !=nullptr)
+        if ((val = this->getCmdOption(argv, argv + argc, "-N")) != nullptr)
         {
             sscanf(val, "%d", &(this->N));
         }
 
-        if((val = this->getCmdOption(argv,argv + argc, "-R")) !=nullptr)
+        if ((val = this->getCmdOption(argv, argv + argc, "-R")) != nullptr)
         {
             sscanf(val, "%d", &(this->R));
         }
 
-        if(string(argv[0]).find("lsh") != string::npos)
+        if (string(argv[0]).find("lsh") != string::npos)
         {
             this->mode = _lsh;
             this->lsh_k = 4;
             this->L = 5;
 
-            if((val = this->getCmdOption(argv,argv + argc, "-L")) !=nullptr)
+            if ((val = this->getCmdOption(argv, argv + argc, "-L")) != nullptr)
             {
                 sscanf(val, "%d", &(this->L));
             }
 
-            if((val = this->getCmdOption(argv,argv + argc, "-k")) !=nullptr)
+            if ((val = this->getCmdOption(argv, argv + argc, "-k")) != nullptr)
             {
                 sscanf(val, "%d", &(this->lsh_k));
             }
@@ -256,21 +252,20 @@ int Input::Parse_Input_Options(const int &argc, char *argv[])
             this->M = 10;
             this->probes = 2;
 
-            if((val = this->getCmdOption(argv,argv + argc, "-k")) !=nullptr)
+            if ((val = this->getCmdOption(argv, argv + argc, "-k")) != nullptr)
             {
                 sscanf(val, "%d", &(this->cube_k));
             }
 
-            if((val = this->getCmdOption(argv,argv + argc, "-M")) !=nullptr)
+            if ((val = this->getCmdOption(argv, argv + argc, "-M")) != nullptr)
             {
                 sscanf(val, "%d", &(this->M));
             }
 
-            if((val = this->getCmdOption(argv,argv + argc, "-probes")) !=nullptr)
+            if ((val = this->getCmdOption(argv, argv + argc, "-probes")) != nullptr)
             {
                 sscanf(val, "%d", &(this->probes));
             }
-
         }
     }
 

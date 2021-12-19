@@ -11,14 +11,14 @@
 
 using namespace std;
 
-//classic
+// classic
 kmeansplusplus::kmeansplusplus(const int &mClusters, const bool &complete, Data &data)
     : nClusters(mClusters), complete(complete), data(data)
 {
     this->method = _Classic;
 }
 
-//lsh
+// lsh
 kmeansplusplus::kmeansplusplus(const int &Clusters, const bool &complete, const int &lsh_k, const int &L, Data &data)
     : nClusters(Clusters), complete(complete), lsh_k(lsh_k), L(L), data(data)
 {
@@ -27,7 +27,7 @@ kmeansplusplus::kmeansplusplus(const int &Clusters, const bool &complete, const 
     this->lsh = new LSH(lsh_k, L, data);
 }
 
-//hypercube
+// hypercube
 kmeansplusplus::kmeansplusplus(const int &Clusters, const bool &complete, const int &cube_k, const int &M, const int &probes, Data &data)
     : nClusters(Clusters), complete(complete), cube_k(cube_k), M(M), probes(probes), data(data)
 {
@@ -61,7 +61,6 @@ int kmeansplusplus::Run(ofstream &outputFile)
         case _Classic:
             clusters = this->LloydsClustering();
             break;
-
         case _LSH:
             clusters = this->LSHClustering();
             break;
@@ -110,13 +109,13 @@ void kmeansplusplus::initCentroids()
 {
     default_random_engine re(chrono::system_clock::now().time_since_epoch().count());
 
-    //picking first centroid at random
+    // picking first centroid at random
     this->centroids.push_back(this->data.data[rand() % this->data.n]);
 
     for (int i = 1; i < nClusters; i++)
     {
         double maxDi = 0;
-        vector<double> P(this->data.n + 1); //plus one for P[0] = 0
+        vector<double> P(this->data.n + 1); // plus one for P[0] = 0
 
         for (auto &point : this->data.data)
         {
@@ -174,11 +173,11 @@ int kmeansplusplus::median(vector<uint32_t> &v)
 
 vector<vector<int>> kmeansplusplus::LloydsClustering()
 {
-    vector<vector<int>> clusters(this->nClusters); //holds all data points for every centroid
+    vector<vector<int>> clusters(this->nClusters); // holds all points belonging to the centroids
 
     for (int i = 0; i < this->data.n; i++)
     {
-        clusters[this->minCentroid(this->data.data[i])].push_back(i);
+        clusters[this->minCentroid(this->data.data[i])].emplace_back(i);
     }
 
     return clusters;

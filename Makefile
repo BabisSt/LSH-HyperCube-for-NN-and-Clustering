@@ -85,10 +85,10 @@ run-cluster-hc:
 
 valgrind-cluster:
 	valgrind --leak-check=full --track-origins=yes --show-leak-kinds=all ./$(BDIR)/$(EXEC3) \
-	-i ./assets/ok \
+	-i ./assets/test \
 	-c ./cluster.conf \
 	-o ./logs/logs.txt \
-	-m LSH
+	-m Classic
 
 clean:
 	rm -f $(ODIR)/*.o
