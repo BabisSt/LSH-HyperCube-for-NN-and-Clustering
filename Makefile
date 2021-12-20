@@ -81,7 +81,7 @@ run-cluster-hc:
 	-i ./assets/ok \
 	-c ./cluster.conf \
 	-o ./logs/logs.txt \
-	-m Hypercube
+	-m HyperCube
 
 valgrind-cluster:
 	valgrind --leak-check=full --track-origins=yes --show-leak-kinds=all ./$(BDIR)/$(EXEC3) \

@@ -41,9 +41,6 @@ char *Input::getCmdOption(char **begin, char **end, const string &option)
 {
     char **itr = find(begin, end, option);
 
-    cout << endl
-         << *itr << " " << *(itr + 1) << endl;
-
     if ((itr != end) && (++itr != end))
     {
         return *itr;
@@ -152,7 +149,9 @@ int Input::Parse_Input_Options(const int &argc, char *argv[])
 
                 if (!options[0].compare("number_of_clusters:"))
                 {
+                    cout << options[1];
                     this->nClusters = atoi(options[1].c_str());
+                    cout << " " << this->nClusters;
                 }
                 else if (!options[0].compare("number_of_vector_hash_tables:"))
                 {
@@ -160,6 +159,7 @@ int Input::Parse_Input_Options(const int &argc, char *argv[])
                 }
                 else if (!options[0].compare("number_of_vector_hash_functions:"))
                 {
+                    cout << this->lsh_k;
                     this->lsh_k = atoi(options[1].c_str());
                 }
                 else if (!options[0].compare("max_number_M_hypercube:"))

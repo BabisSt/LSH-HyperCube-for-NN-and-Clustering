@@ -44,7 +44,8 @@ int main(int argc, char *argv[])
         {
             kmeansplusplus *kmeans;
 
-            cout << input.method;
+            // cout << input.method;
+            // cout << input.lsh_k << " " << input.cube_k;
 
             if (!strcmp(input.method, "Classic")) // klassikh periptwsh gia kmeansplusplus
             {
@@ -52,11 +53,11 @@ int main(int argc, char *argv[])
             }
             else if (!strcmp(input.method, "LSH")) // gia LSH
             {
-                kmeans = new kmeansplusplus(input.nClusters, input.complete, input.lsh_k, input.L, data);
+                // kmeans = new kmeansplusplus(input.nClusters, input.complete, input.lsh_k, input.L, data);
             }
             else if (!strcmp(input.method, "HyperCube")) // gia hypercube
             {
-                kmeans = new kmeansplusplus(input.nClusters, input.complete, input.cube_k, input.M, input.probes, data);
+                // kmeans = new kmeansplusplus(input.nClusters, input.complete, input.cube_k, input.M, input.probes, data);
             }
             else
             {

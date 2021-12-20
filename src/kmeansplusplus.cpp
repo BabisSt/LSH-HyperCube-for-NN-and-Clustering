@@ -107,6 +107,7 @@ int kmeansplusplus::Run(ofstream &outputFile)
 
 void kmeansplusplus::initCentroids()
 {
+
     default_random_engine re(chrono::system_clock::now().time_since_epoch().count());
 
     // picking first centroid at random
@@ -245,7 +246,7 @@ vector<vector<int>> kmeansplusplus::HyperCubeClustering()
     return clusters;
 }
 
-int kmeansplusplus::minCentroid(const vector<uint32_t> &point)
+int kmeansplusplus::minCentroid(const vector<uint32_t> &point) // Compares all centroid's distances to point and returns the closest
 {
     int index = -1, minDistance = INT32_MAX;
 
