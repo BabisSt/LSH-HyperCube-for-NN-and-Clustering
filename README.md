@@ -11,6 +11,12 @@ K-means ++ and Lloyd's algorthims for Clustring
 Not fully functional
 
 
+
+
+
+
+
+
 1η Εργασία Ανάπτυξη Λογισμικού για Αλγοριθμικά Προβλήματα 
 
 	ΣΤΕΒΗΣ ΧΑΡΑΛΑΜΠΟΣ - ΑΝΤΩΝΙΟΣ sdi1600278
