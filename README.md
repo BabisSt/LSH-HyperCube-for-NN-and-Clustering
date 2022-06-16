@@ -1,6 +1,6 @@
-# First Project For Software Development for Algorithmic Problems
-Finding Nearest Neighbor/s with Locality Sensitive Hashing and HyperCube
+# Finding Nearest Neighbor/s with Locality Sensitive Hashing and HyperCube
 Data Clustering
+First Project For Software Development for Algorithmic Problems
 
 
 
