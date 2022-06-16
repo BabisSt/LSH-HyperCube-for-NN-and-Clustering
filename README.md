@@ -2,12 +2,11 @@
 
 First Project For Software Development for Algorithmic Problems
 
-Implemented LSH and HyperCube algorithms in d-dimensional space with L2 metric for:
+Implemented LSH and HyperCube algorithms in d-dimensional space with L2 metric for:<br />
+	The nearest neighbor<br />
+	N nearest neighbors<br />
 
-	The nearest neighbor
-	N nearest neighbors
-
-K-means ++ and Lloyd's algorthims for Clustring
+K-means ++ and Lloyd's algorthims for Clustring<br />
 Not fully functional
 
 
