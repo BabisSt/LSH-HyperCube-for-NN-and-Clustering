@@ -1,8 +1,12 @@
-# Finding Nearest Neighbor/s with Locality Sensitive Hashing and HyperCube
-Data Clustering
+# Finding Nearest Neighbor/s with Locality Sensitive Hashing and HyperCube - Data Clustering
+
 First Project For Software Development for Algorithmic Problems
 
-
+Implemented LSH and HyperCube algorithms in d-dimensional space with L2 metric for:
+	The nearest neighbor
+	N nearest neighbors
+K-means ++ and Lloyd's algorthims for Clustring
+Not fully functional
 
 
 1η Εργασία Ανάπτυξη Λογισμικού για Αλγοριθμικά Προβλήματα 
