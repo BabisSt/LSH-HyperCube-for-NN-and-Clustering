@@ -1,92 +1,63 @@
-# Finding Nearest Neighbor/s with Locality Sensitive Hashing and HyperCube - Data Clustering
+# Finding Nearest Neighbor(s) with Locality Sensitive Hashing and HyperCube - Data Clustering
 
-First Project For Software Development for Algorithmic Problems
+## Project Overview
 
-Implemented LSH and HyperCube algorithms in d-dimensional space with L2 metric for:<br />
-	The nearest neighbor<br />
-	N nearest neighbors<br />
+This is the first project for the Software Development course on Algorithmic Problems. The project implements Locality Sensitive Hashing (LSH) and HyperCube algorithms in d-dimensional space using the L2 metric to find:
 
-K-means ++ and Lloyd's algorthims for Clustring<br />
-Not fully functional
+- The nearest neighbor
+- N nearest neighbors
 
+Additionally, K-means++ and Lloyd's algorithms are implemented for clustering. The clustering functionality is not fully functional.
 
+## Project Structure
 
+The project consists of the following folders and files:
 
+- **assets**: Contains dataset files.
+- **bin**: Contains executable files.
+- **build**: Contains object files (`.o`).
+- **include**: Contains header files (`.h`).
+- **logs**: Contains `logs.txt`, which holds the execution logs.
+- **src**: Contains source files (`.cpp`).
+- **cluster.conf**: Configuration file for clustering.
+- **Makefile**: Build instructions.
+- **README**: This file.
 
+## Running the Project
 
+After building the project with `make`, there are two ways to run it:
 
+1. **Manually running commands**:
+   - Navigate to the `bin` folder and run the commands as specified in the project description.
+   
+2. **Running predefined commands from the Makefile**:
+   - Run predefined commands such as `run-lsh`, `run-hc` from the Makefile. Some of these commands do not require all arguments, and the program will use default values.
 
-1η Εργασία Ανάπτυξη Λογισμικού για Αλγοριθμικά Προβλήματα 
+When running with the first method, the program asks for input and query files. With the second method, the program runs directly using the files found in the Makefile. Afterward, it allows the user to run with different parameters.
 
-	ΣΤΕΒΗΣ ΧΑΡΑΛΑΜΠΟΣ - ΑΝΤΩΝΙΟΣ sdi1600278
-	
-Από τι αποτελείται η εργασία:
-	Φάκελος assets:	Εκεί θα μπουν τα αρχεία των dataset
-	Φάκελος bin:		Εκεί μπαίνουν τα εκτελέσιμα
-	Φάκελος build:		Εκεί μπαίνουν τα .ο
-	Φάκελος include:	Εκεί βρίσκονται τα .h
-	Φάκελοσ logs:		Εκεί βρίσκεται το αρχείο logs.txt που έχει τις εκτυπώσεις της εργασίας
-	Φάκελος src:		Εκεί βρίσκονται τα .cpp
-	cluster.conf
-	Makefile
-	README
-	
-Πως τρέχει η εργασία:
-	Αφού κάνουμε make στην εργασία υπάρχουν δύο τρόποι για να τρέξει. 
-	Ο πρώτος είναι να μπούμε στον φάκελο bin και να τρέξουμε τις εντολές όπως λέει η εκφώνηση.
-	Ο δεύτερος είναι να τρέξουμε έτοιμες εντολές μέσα από το Makefile όπως για παράδειγμα run-lsh, run-hc. 
-	Σε μερικές από αυτές τις εντολές δεν δίνονται όλα τα ορόσματα οπότε η εργασία δίνει τα default.
-	
-	Αν η εκτέλεση γίνει με τον πρώτο τρόπο τότε η εργασία ζητάει input, query files ενώ αν γίνει με τον δεύτερο
-	τρέχει κατευθείαν με τα αρχεία που βρήκε στο Makefile. Στην συνέχεια η εργασία δίνει την δυνατότητα να ξανατρέξει
-	με διαφοτερικά στοιχεία.
-	
-	Τα αποτελέσματα της εργασίας όπως είπαμε παραπάνω βρίσκονται στο αρχείο logs/logs.txt
-	
-Τι μπορεί να κάνει η εργασία:
-	Η εργασία ανοίγει το dataset το διαβάζει και το αποθηκεύει, τόσο για input όσο και για query. 
-	Στην συνέχεια λειτουγεί ανάλογα αν είμαστε σε cluster mode ή όχι.
-	Αν όχι διαβάζει queries και δημιουργεί lsh ή hypercube.
-	Η LSH μπορεί να βρίσκει χρόνους και να κάνει τις απαραίτητες εκτυπώσεις και με brute force και με get closest neighbors.
-	Κάνει hash τα data που παίρνει από τα hashtables (θα πούμε παρακάτω), βρίσκει τις g και εκτελεί τα queries.
-	H hypercube πέρα από τα παραπάνω δημιουργεί τις f και υπολογίζει τις hamming distances.
-	Στα hashtables υπολογίζουμε την hashfunction από την τα κομμάτια που αποτελείται και φτίαχνουμε τα tables με τα buckets τους.
+The results are saved in the `logs/logs.txt` file.
 
+## Functionality
 
-1η Εργασία Ανάπτυξη Λογισμικού για Αλγοριθμικά Προβλήματα 
+- The program reads and stores datasets for both input and query.
+- It operates in **cluster mode** or **non-cluster mode**, depending on the mode selected.
+- **In non-cluster mode**, it processes queries and creates either LSH or HyperCube.
+    - **LSH**: Can find times and make necessary prints using brute force or by getting the closest neighbors.
+    - **Hypercube**: In addition to the above, it creates `f` values and calculates Hamming distances.
+- For the hash tables, the program computes hash functions from the data chunks and constructs tables with their respective buckets.
 
-	ΣΤΕΒΗΣ ΧΑΡΑΛΑΜΠΟΣ - ΑΝΤΩΝΙΟΣ sdi1600278
-	
-Από τι αποτελείται η εργασία:
-	Φάκελος assets:	Εκεί θα μπουν τα αρχεία των dataset
-	Φάκελος bin:		Εκεί μπαίνουν τα εκτελέσιμα
-	Φάκελος build:		Εκεί μπαίνουν τα .ο
-	Φάκελος include:	Εκεί βρίσκονται τα .h
-	Φάκελοσ logs:		Εκεί βρίσκεται το αρχείο logs.txt που έχει τις εκτυπώσεις της εργασίας
-	Φάκελος src:		Εκεί βρίσκονται τα .cpp
-	cluster.conf
-	Makefile
-	README
-	
-Πως τρέχει η εργασία:
-	Αφού κάνουμε make στην εργασία υπάρχουν δύο τρόποι για να τρέξει. 
-	Ο πρώτος είναι να μπούμε στον φάκελο bin και να τρέξουμε τις εντολές όπως λέει η εκφώνηση.
-	Ο δεύτερος είναι να τρέξουμε έτοιμες εντολές μέσα από το Makefile όπως για παράδειγμα run-lsh, run-hc. 
-	Σε μερικές από αυτές τις εντολές δεν δίνονται όλα τα ορόσματα οπότε η εργασία δίνει τα default.
-	
-	Αν η εκτέλεση γίνει με τον πρώτο τρόπο τότε η εργασία ζητάει input, query files ενώ αν γίνει με τον δεύτερο
-	τρέχει κατευθείαν με τα αρχεία που βρήκε στο Makefile. Στην συνέχεια η εργασία δίνει την δυνατότητα να ξανατρέξει
-	με διαφοτερικά στοιχεία.
-	
-	Τα αποτελέσματα της εργασίας όπως είπαμε παραπάνω βρίσκονται στο αρχείο logs/logs.txt
-	
-Τι μπορεί να κάνει η εργασία:
-	Η εργασία ανοίγει το dataset το διαβάζει και το αποθηκεύει, τόσο για input όσο και για query. 
-	Στην συνέχεια λειτουγεί ανάλογα αν είμαστε σε cluster mode ή όχι.
-	Αν όχι διαβάζει queries και δημιουργεί lsh ή hypercube.
-	Η LSH μπορεί να βρίσκει χρόνους και να κάνει τις απαραίτητες εκτυπώσεις και με brute force και με get closest neighbors.
-	Κάνει hash τα data που παίρνει από τα hashtables (θα πούμε παρακάτω), βρίσκει τις g και εκτελεί τα queries.
-	H hypercube πέρα από τα παραπάνω δημιουργεί τις f και υπολογίζει τις hamming distances.
-	Στα hashtables υπολογίζουμε την hashfunction από την τα κομμάτια που αποτελείται και φτίαχνουμε τα tables με τα buckets τους.
+## How It Works
 
+- **LSH**: The program hashes the data using hash tables, finds `g` values, and executes queries.
+- **Hypercube**: In addition to the operations of LSH, the program creates `f` values and calculates Hamming distances.
+- **Hash tables**: We calculate the hash function from data chunks and build the hash tables with their respective buckets.
 
+## Execution Logs
+
+The logs of the program are stored in the `logs/logs.txt` file, which contains the output of the program execution.
+
+---
+
+### Developed by:
+**Charalambos Stevis**
+Student ID: `sdi1600278`
